@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>深度商店投稿器</string>
+   <string>社区商店投稿器</string>
   </property>
   <property name="windowIcon">
    <iconset resource="backgrounds.qrc">
