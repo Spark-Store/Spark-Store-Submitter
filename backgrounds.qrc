@@ -1,7 +1,10 @@
 <RCC>
     <qresource prefix="/image">
         <file>background.png</file>
-        <file>华康少女字体.ttf</file>
         <file>background2.png</file>
+        <file>icon.png</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>华康少女字体.ttf</file>
     </qresource>
 </RCC>

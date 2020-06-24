@@ -14,15 +14,18 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()&~Qt::WindowMaximizeButtonHint);    // 禁止最大化按钮
+    setFixedSize(this->width(),this->height());     // 固定窗口大小
+
     this->setAcceptDrops(true);
     ui->icon->setScaledContents(true);
     ShowUI();
     Initialize();
 
-    QString selfFont = loadFontFamilyFromTTF();
-    QFont font(selfFont);
-    qDebug()<<font<<endl;
-    QApplication::setFont(font);
+    /* deepin 系统设置里的个性化-字体设置会覆盖程序自定义字体
+     * 非 deepin 系统可以调用自定义字体并初始化窗体
+     * LoadCustomFont();
+     */
 
     process = new QProcess();
     process->setReadChannel(QProcess::StandardOutput);
@@ -54,7 +57,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else
     {
-        if(suffix == "png") // 或者 suffix == "jpg"
+        if(suffix == "png")     // 或者 suffix == "jpg"，以后可能会支持？
         {
             if (ui->image->text() == "")
             {
@@ -83,7 +86,7 @@ void MainWindow::on_pushButton_clicked()
     {
         if(QFileInfo(ui->filename->text()).suffix() == "deb")
         {
-            if(ui->name->text() == "" || ui->filename->text() == "" || ui->contributor->text() == "" || icon == "" || ui->image->text() == "" || ui->info->toPlainText() == "")
+            if(ui->name->text() == "" || ui->filename->text() == "" || ui->pkgname->text() == "" || ui->version->text() == "" || ui->contributor->text() == "" || icon == "" || ui->image->text() == "" || ui->info->toPlainText() == "")
             {
                 QMessageBox::information(NULL, tr("诶？"), tr("你好像忘记了什么～"));
             }
@@ -116,12 +119,12 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    icon = QFileDialog::getOpenFileName(this, tr("选择图标"), QDir::homePath(), tr("Image Files(*.png)"));
+    icon = QFileDialog::getOpenFileName(this, tr("选择图标"), QDir::homePath(), tr("Image Files(*.png)"));  // 或者 "*.jpg"，以后可能会支持？
     if(icon.length() == 0) {
         QMessageBox::information(NULL, tr("呐！"), tr("根本没有选中东西嘛！"));
     } else {
         QProcess makeIcon;
-        makeIcon.start("cp -a " + icon + " " + QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix());
+        makeIcon.start("cp -a " + icon + " " + QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
         makeIcon.waitForFinished();
         qDebug()<<makeIcon.readAllStandardError()<<endl;
         icon = QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix();
@@ -163,20 +166,17 @@ void MainWindow::on_pushButton_6_clicked()
     }
 }
 
-QString MainWindow::loadFontFamilyFromTTF()
+void MainWindow::LoadCustomFont()   // 未测试，谨慎使用
 {
-    static QString font;
-    static bool loaded = false;
-    if(!loaded)
-    {
-        loaded = true;
-        int loadedFontID = QFontDatabase::addApplicationFont(":/image/华康少女字体.ttf");
-        QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
-        if(!loadedFontFamilies.empty())
-            font = loadedFontFamilies.at(0);
-        qDebug()<<font<<endl;
-    }
-    return font;
+    QString font;
+
+    int loadedFontID = QFontDatabase::addApplicationFont(":/font/华康少女字体.ttf");
+    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
+    if(!loadedFontFamilies.empty())
+        font = loadedFontFamilies.at(0);
+    qDebug()<<font<<endl;
+
+    QApplication::setFont(font);
 }
 
 QString MainWindow::CalculateSize(qint64 size)
@@ -315,7 +315,7 @@ void MainWindow::MakeJson()
 {
     name = ui->name->text();
     local = name;
-    local.replace(QRegExp("[\\s]+"), "");    //  本地创建的文件夹自动删除空格，避免写入json失败，原因未知
+    local.replace(QRegExp("[\\s]+"), "");    // 本地创建的文件夹自动删除空格，避免写入json失败，原因未知
     filename = ui->filename->text();
     pkgname = ui->pkgname->text();
     version = ui->version->text();
@@ -337,7 +337,7 @@ void MainWindow::MakeJson()
     mkdir.start("cp -a " + icon + " " + QDir::homePath() + "/Desktop/" + local + "/");
     mkdir.waitForFinished();
     mkdir.close();
-    QFile json(QDir::homePath() + "/Desktop/" + local + "/app.json");   //  若文件夹中有空格，此处写入失败，加了引号也是，原因未知
+    QFile json(QDir::homePath() + "/Desktop/" + local + "/app.json");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知
     if(!json.open(QIODevice::Append | QIODevice::Text))  // append追加新内容到文件末尾
     {
         QMessageBox::critical(this, "错误", "写入控制文件失败！", "确定");
@@ -364,15 +364,15 @@ void MainWindow::MakeJson()
 void MainWindow::MakeTar()
 {
     process->setWorkingDirectory(QDir::homePath() + "/Desktop/");
-    process->start("tar -zcvf \"" + local + "\".tar.gz ./\"" + local + "\"/");
+    process->start("tar -zcvf " + local + ".tar.gz ./" + local + "/");
     process->waitForFinished();
     process->close();
 }
 
-void MainWindow::RmDir()    //  考虑后期压缩后直接删除文件夹
+void MainWindow::RemoveDir()    // 考虑后期压缩后直接删除文件夹
 {
     QProcess rm;
-    rm.start("rm -rf " + QDir::homePath() + "/Desktop/\"" + name + "\"/");
+    rm.start("rm -rf " + QDir::homePath() + "/Desktop/" + local + "/");
     rm.waitForFinished();
     rm.close();
 }

@@ -21,14 +21,15 @@ public:
 
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
-    QString loadFontFamilyFromTTF();
+    void LoadCustomFont();
     QString CalculateSize(qint64 size);
     void Initialize();
     void ShowUI();
     void HideUI();
+    void MakeDir();
     void MakeJson();
     void MakeTar();
-    void RmDir();
+    void RemoveDir();
 
 private:
     Ui::MainWindow *ui;
