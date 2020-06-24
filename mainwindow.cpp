@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* deepin 系统设置里的个性化-字体设置会覆盖程序自定义字体
      * 非 deepin 系统可以调用自定义字体并初始化窗体
+     *
      * LoadCustomFont();
      */
 
@@ -50,33 +51,35 @@ void MainWindow::dropEvent(QDropEvent *event)
     QString name = event->mimeData()->urls().at(0).toLocalFile();
     suf = QFileInfo(name);
     QString suffix = suf.suffix();
-    if(suffix == "deb")
-    {
-        ui->filename->setText(suf.filePath());
-        ui->name->setText(suf.baseName());
-    }
-    else
-    {
+    /*
+     * if(suffix == "deb")
+     * {
+     *   ui->filename->setText(suf.filePath());
+     *    ui->name->setText(suf.baseName());
+     * }
+     * else
+     * {
+     */
         if(suffix == "png")     // 或者 suffix == "jpg"，以后可能会支持？
         {
-            if (ui->image->text() == "")
-            {
-                num = 1;
-            }
-            QProcess mv;
-            QString afterMV;
-            afterMV = QString(suf.absolutePath() + "/screen_%1." + suf.suffix()).arg(num);
-            qDebug()<<num<<endl;
-            mv.start("cp -a " + suf.filePath() + " " + afterMV);
-            mv.waitForFinished();
-            ui->image->insert(afterMV + "   ");
-            num++;
+            /*
+             * if(ui->image->toPlainText() == "")
+             * {
+             *     num = 1;
+             * }
+             * QProcess mv;
+             * QString afterMV = QString(suf.absolutePath() + "/screen_%1." + suf.suffix()).arg(num);
+             * mv.start("cp -a " + suf.filePath() + " " + afterMV);
+             * mv.waitForFinished();
+             */
+            ui->image->append(suf.filePath());
+            // num++;
         }
         else
         {
             QMessageBox::critical(this, "呐！", "内个...只支持png文件呢～");
         }
-    }
+    // }
 }
 
 
@@ -86,7 +89,7 @@ void MainWindow::on_pushButton_clicked()
     {
         if(QFileInfo(ui->filename->text()).suffix() == "deb")
         {
-            if(ui->name->text() == "" || ui->filename->text() == "" || ui->pkgname->text() == "" || ui->version->text() == "" || ui->contributor->text() == "" || icon == "" || ui->image->text() == "" || ui->info->toPlainText() == "")
+            if(ui->name->text() == "" || ui->filename->text() == "" || ui->pkgname->text() == "" || ui->version->text() == "" || ui->contributor->text() == "" || icon == "" || ui->image->toPlainText() == "" || ui->info->toPlainText() == "")
             {
                 QMessageBox::information(NULL, tr("诶？"), tr("你好像忘记了什么～"));
             }
@@ -98,7 +101,6 @@ void MainWindow::on_pushButton_clicked()
                     ui->website->setText(" ");
                 HideUI();
                 MakeJson();
-                //MakeTar();
             }
         }
         else
@@ -123,11 +125,7 @@ void MainWindow::on_pushButton_3_clicked()
     if(icon.length() == 0) {
         QMessageBox::information(NULL, tr("呐！"), tr("根本没有选中东西嘛！"));
     } else {
-        QProcess makeIcon;
-        makeIcon.start("cp -a " + icon + " " + QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
-        makeIcon.waitForFinished();
-        qDebug()<<makeIcon.readAllStandardError()<<endl;
-        icon = QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix();
+        // icon = QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix();  // 先留着，可能用得上......
         ui->pushButton_3->setText("");
         ui->icon->setPixmap(QIcon(icon).pixmap(135,135));
     }
@@ -144,6 +142,7 @@ void MainWindow::on_pushButton_5_clicked()
     ui->textBrowser->show();
     ui->pushButton_5->hide();
     MakeTar();
+    // RemoveDir();     // 有需要可以删除构建文件夹
 }
 
 void MainWindow::on_pushButton_6_clicked()
@@ -154,7 +153,7 @@ void MainWindow::on_pushButton_6_clicked()
     } else {
         ui->filename->setText(filename);
         QProcess getPkgInfo;
-        getPkgInfo.start("dpkg-deb -W " + filename);
+        getPkgInfo.start("dpkg-deb -W \"" + filename + "\"");
         getPkgInfo.waitForFinished();
         QString pkgInfo = getPkgInfo.readAllStandardOutput();
         pkgInfo.replace(QRegExp("[\\s]+"), " ");
@@ -174,61 +173,8 @@ void MainWindow::LoadCustomFont()   // 未测试，谨慎使用
     QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
     if(!loadedFontFamilies.empty())
         font = loadedFontFamilies.at(0);
-    qDebug()<<font<<endl;
 
     QApplication::setFont(font);
-}
-
-QString MainWindow::CalculateSize(qint64 size)
-{
-    int integer = 0;  //整数位
-    int decimal = 0;  //小数位，保留两位
-    QString unit = "B";
-    qint64 standardSize = size;
-    qint64 curSize = size;
-
-    if(standardSize > 1024) {
-        curSize = standardSize * 1000;
-        curSize /= 1024;
-        integer = curSize / 1000;
-        decimal = curSize % 1000;
-        standardSize /= 1024;
-        unit = "KB";
-        if(standardSize > 1024) {
-            curSize = standardSize * 1000;
-            curSize /= 1024;
-            integer = curSize / 1000;
-            decimal = curSize % 1000;
-            standardSize /= 1024;
-            unit = "MB";
-            if(standardSize > 1024) {
-                curSize = standardSize * 1000;
-                curSize /= 1024;
-                integer = curSize / 1000;
-                decimal = curSize % 1000;
-                unit = "GB";
-            }
-        }
-    }
-
-    QString dec = "0";
-    if (0 <= decimal && decimal <= 9) {
-        dec += "0" + QString::number(decimal);
-    }
-
-    if (10 <= decimal && decimal <= 99) {
-        dec += QString::number(decimal);
-    }
-
-    if (100 <= decimal && decimal <= 999) {
-        int temp = decimal % 10;
-        decimal /= 10;
-        if(5 <= temp && temp <= 9)
-            decimal++;
-        dec = QString::number(decimal);
-    }
-
-    return QString::number(integer) + "." + dec + unit;
 }
 
 void MainWindow::Initialize()
@@ -315,7 +261,7 @@ void MainWindow::MakeJson()
 {
     name = ui->name->text();
     local = name;
-    local.replace(QRegExp("[\\s]+"), "");    // 本地创建的文件夹自动删除空格，避免写入json失败，原因未知
+    local.replace(QRegExp("[\\s]+"), "");    // 本地创建的文件夹自动删除空格，避免写入json失败，原因未知!
     filename = ui->filename->text();
     pkgname = ui->pkgname->text();
     version = ui->version->text();
@@ -323,25 +269,39 @@ void MainWindow::MakeJson()
     website = ui->website->text();
     contributor = ui->contributor->text();
     update = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm");
-    screenshots = ui->image->text();
+    screenshots = ui->image->toPlainText();
     info = ui->info->toPlainText();
-    qDebug()<<info;
     size = CalculateSize(QFileInfo(filename).size());
-    QProcess mkdir;
-    mkdir.start("mkdir " + QDir::homePath() + "/Desktop/" + local + "");
-    mkdir.waitForFinished();
-    mkdir.start("cp -a " + filename + " " + QDir::homePath() + "/Desktop/" + local + "/");
-    mkdir.waitForFinished();
-    mkdir.start("cp -a " + screenshots + " -t " + QDir::homePath() + "/Desktop/" + local + "/");
-    mkdir.waitForFinished();
-    mkdir.start("cp -a " + icon + " " + QDir::homePath() + "/Desktop/" + local + "/");
-    mkdir.waitForFinished();
-    mkdir.close();
-    QFile json(QDir::homePath() + "/Desktop/" + local + "/app.json");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知
+
+    QProcess build;
+    build.start("mkdir " + QDir::homePath() + "/Desktop/" + local + "/");
+    build.waitForFinished();
+    build.close();
+    build.start("cp \"" + filename + "\" " + QDir::homePath() + "/Desktop/" + local + "/");
+    build.waitForFinished();
+    build.close();
+    build.start("cp \"" + icon + "\" " + QDir::homePath() + "/Desktop/" + local + "/icon.png");   // + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
+    build.waitForFinished();
+    build.close();
+    /*
+     * build.start("cp \"" + screenshots + "\" -t " + QDir::homePath() + "/Desktop/" + local + "/");
+     * build.waitForFinished();
+     */
+    QStringList list = screenshots.split("\n");
+    for(int i = 0; i < list.length(); i++)
+    {
+        QString des = QString(QDir::homePath() + "/Desktop/" + local + "/screen_%1.png").arg(i + 1);
+        build.start("cp \"" + list.at(i) + "\" " + des);
+        build.waitForFinished();
+        build.close();
+    }
+
+    QFile json(QDir::homePath() + "/Desktop/" + local + "/app.json");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知!
     if(!json.open(QIODevice::Append | QIODevice::Text))  // append追加新内容到文件末尾
     {
         QMessageBox::critical(this, "错误", "写入控制文件失败！", "确定");
         ShowUI();
+        RemoveDir();
         return;
     }
     QTextStream write(&json);   // 写入 json
@@ -375,4 +335,56 @@ void MainWindow::RemoveDir()    // 考虑后期压缩后直接删除文件夹
     rm.start("rm -rf " + QDir::homePath() + "/Desktop/" + local + "/");
     rm.waitForFinished();
     rm.close();
+}
+
+QString MainWindow::CalculateSize(qint64 size)
+{
+    int integer = 0;  //整数位
+    int decimal = 0;  //小数位，保留两位
+    QString unit = "B";
+    qint64 standardSize = size;
+    qint64 curSize = size;
+
+    if(standardSize > 1024) {
+        curSize = standardSize * 1000;
+        curSize /= 1024;
+        integer = curSize / 1000;
+        decimal = curSize % 1000;
+        standardSize /= 1024;
+        unit = "KB";
+        if(standardSize > 1024) {
+            curSize = standardSize * 1000;
+            curSize /= 1024;
+            integer = curSize / 1000;
+            decimal = curSize % 1000;
+            standardSize /= 1024;
+            unit = "MB";
+            if(standardSize > 1024) {
+                curSize = standardSize * 1000;
+                curSize /= 1024;
+                integer = curSize / 1000;
+                decimal = curSize % 1000;
+                unit = "GB";
+            }
+        }
+    }
+
+    QString dec = "0";
+    if (0 <= decimal && decimal <= 9) {
+        dec += "0" + QString::number(decimal);
+    }
+
+    if (10 <= decimal && decimal <= 99) {
+        dec += QString::number(decimal);
+    }
+
+    if (100 <= decimal && decimal <= 999) {
+        int temp = decimal % 10;
+        decimal /= 10;
+        if(5 <= temp && temp <= 9)
+            decimal++;
+        dec = QString::number(decimal);
+    }
+
+    return QString::number(integer) + "." + dec + unit;
 }

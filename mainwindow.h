@@ -22,14 +22,13 @@ public:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     void LoadCustomFont();
-    QString CalculateSize(qint64 size);
     void Initialize();
     void ShowUI();
     void HideUI();
-    void MakeDir();
     void MakeJson();
     void MakeTar();
     void RemoveDir();
+    QString CalculateSize(qint64 size);
 
 private:
     Ui::MainWindow *ui;
@@ -52,7 +51,7 @@ private:
 
     QProcess *process;
 
-    int num = 1;
+    // int num = 1;
 
 private slots:
     void on_pushButton_clicked();

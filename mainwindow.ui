@@ -149,7 +149,7 @@ background-color: rgb(255, 244, 245);</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>420</y>
+      <y>450</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -165,9 +165,9 @@ background-color: rgb(255, 244, 245);</string>
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>420</y>
+      <y>450</y>
       <width>341</width>
-      <height>141</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -285,25 +285,6 @@ background-color: rgb(255, 244, 245);
      <string>截图文件</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="image">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>370</y>
-      <width>341</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-style:none;
-padding:3px;
-border-radius:7px;
-background-color: rgb(255, 244, 245);</string>
-    </property>
-    <property name="placeholderText">
-     <string>截图直接拖进窗口就可以啦～</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="icon">
     <property name="geometry">
      <rect>
@@ -340,7 +321,7 @@ background-color: rgba(255, 255, 255, 0);
 color: rgb(165, 165, 165);</string>
     </property>
     <property name="text">
-     <string>单击此处选择Logo图标</string>
+     <string>点击这里选择Logo图标</string>
     </property>
    </widget>
    <widget class="QLabel" name="lable33">
@@ -575,6 +556,28 @@ background-color: rgb(255, 244, 245);
      <string>打开文件</string>
     </property>
    </widget>
+   <widget class="QTextEdit" name="image">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>370</y>
+      <width>341</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>截图直接拖进窗口就可以添加哦～</string>
+    </property>
+   </widget>
    <zorder>lable33</zorder>
    <zorder>lable22</zorder>
    <zorder>name</zorder>
@@ -590,7 +593,6 @@ background-color: rgb(255, 244, 245);
    <zorder>pushButton</zorder>
    <zorder>pushButton_2</zorder>
    <zorder>label_8</zorder>
-   <zorder>image</zorder>
    <zorder>icon</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>label_7</zorder>
@@ -603,6 +605,7 @@ background-color: rgb(255, 244, 245);
    <zorder>pushButton_4</zorder>
    <zorder>pushButton_5</zorder>
    <zorder>textBrowser</zorder>
+   <zorder>image</zorder>
   </widget>
  </widget>
  <resources>
