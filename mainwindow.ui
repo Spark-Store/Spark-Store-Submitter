@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>889</width>
+    <height>580</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="name">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>10</y>
+      <width>381</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>这里写在商店展示的名字～</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="filename">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>281</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>这里是要投稿的安装包的路径~</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>应用名称</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>deb位置</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>作者</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="author">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>170</y>
+      <width>381</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>这里是原作者的名字哦～</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lable22">
+    <property name="geometry">
+     <rect>
+      <x>-50</x>
+      <y>0</y>
+      <width>931</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/background.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>330</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>介绍信息</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="info">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>330</y>
+      <width>341</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>写点什么向大家介绍一下这个应用软件吧～</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>版本</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="version">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>130</y>
+      <width>381</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>这里要填上版本哦～</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>510</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:pressed
+{
+background-color:#c44237;
+border-radius:20px;
+color:#FFFFFF; 
+}
+QPushButton
+{
+border-radius:20px;
+color:#000000; 
+background-color: rgb(255, 244, 245);
+}</string>
+    </property>
+    <property name="text">
+     <string>打包咯！</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>510</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:pressed
+{
+background-color:#c44237;
+border-radius:20px;
+color:#FFFFFF; 
+}
+QPushButton
+{
+border-radius:20px;
+color:#000000; 
+background-color: rgb(255, 244, 245);
+}</string>
+    </property>
+    <property name="text">
+     <string>算了算了......</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>截图文件</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="image">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>290</y>
+      <width>341</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>截图直接拖进窗口就可以啦～</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="icon">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>20</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>20</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgba(255, 255, 255, 0);
+color: rgb(165, 165, 165);</string>
+    </property>
+    <property name="text">
+     <string>单击此处选择Logo图标</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lable33">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>881</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/image/background2.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>431</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>250</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>打包者</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="contributor">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>250</y>
+      <width>361</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>这里写你的名字～</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>380</y>
+      <width>150</width>
+      <height>75</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:pressed
+{
+background-color:#c44237;
+border-radius:20px;
+color:#FFFFFF; 
+}
+QPushButton
+{
+border-radius:20px;
+color:#000000; 
+background-color: rgb(255, 244, 245);
+}</string>
+    </property>
+    <property name="text">
+     <string>再来一份？</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>130</y>
+      <width>150</width>
+      <height>75</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:pressed
+{
+background-color:#c44237;
+border-radius:20px;
+color:#FFFFFF; 
+}
+QPushButton
+{
+border-radius:20px;
+color:#000000; 
+background-color: rgb(255, 244, 245);
+}</string>
+    </property>
+    <property name="text">
+     <string>要不要压缩一下？</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>主页</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="website">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>210</y>
+      <width>381</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>这里写原作者的主页或者官网～</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pkgname">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>90</y>
+      <width>381</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-style:none;
+padding:3px;
+border-radius:7px;
+background-color: rgb(255, 244, 245);</string>
+    </property>
+    <property name="placeholderText">
+     <string>这里写软件包的名字~（比如krita，vscode，dde-dock这样啦）</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>包名</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>50</y>
+      <width>91</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:pressed
+{
+background-color:#c44237;
+border-radius:20px;
+color:#FFFFFF; 
+}
+QPushButton
+{
+border-radius:20px;
+color:#000000; 
+background-color: rgb(255, 244, 245);
+}</string>
+    </property>
+    <property name="text">
+     <string>打开文件</string>
+    </property>
+   </widget>
+   <zorder>lable33</zorder>
+   <zorder>lable22</zorder>
+   <zorder>name</zorder>
+   <zorder>filename</zorder>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_5</zorder>
+   <zorder>author</zorder>
+   <zorder>label_9</zorder>
+   <zorder>info</zorder>
+   <zorder>label_4</zorder>
+   <zorder>version</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>label_8</zorder>
+   <zorder>image</zorder>
+   <zorder>icon</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>label_7</zorder>
+   <zorder>contributor</zorder>
+   <zorder>label_6</zorder>
+   <zorder>website</zorder>
+   <zorder>pkgname</zorder>
+   <zorder>label_3</zorder>
+   <zorder>pushButton_6</zorder>
+   <zorder>pushButton_4</zorder>
+   <zorder>pushButton_5</zorder>
+   <zorder>textBrowser</zorder>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>526</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>265</x>
+     <y>645</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
