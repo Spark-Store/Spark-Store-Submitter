@@ -34,7 +34,7 @@ private:
     Ui::MainWindow *ui;
 
     QString name;
-    QString local;
+    // QString local;
     QString filename;
     QString pkgname;
     QString version;

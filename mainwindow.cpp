@@ -262,10 +262,12 @@ void MainWindow::HideUI()
 void MainWindow::MakeJson()
 {
     name = ui->name->text();
-    local = name;
-    local.replace(QRegExp("[\\s]+"), "");    // 本地创建的文件夹自动删除空格，避免写入json失败，原因未知!
+    /*
+     * local = name;
+     * local.replace(QRegExp("[\\s]+"), "");    // 本地创建的文件夹自动删除空格，避免写入json失败，原因未知!
+     */
     filename = ui->filename->text();
-    pkgname = ui->pkgname->text();
+    pkgname = ui->pkgname->text();  // 更换标准，使用pkgname作为文件夹名，方便上传
     version = ui->version->text();
     author = ui->author->text();
     website = ui->website->text();
@@ -276,13 +278,13 @@ void MainWindow::MakeJson()
     size = CalculateSize(QFileInfo(filename).size());
 
     QProcess build;
-    build.start("mkdir " + QDir::homePath() + "/Desktop/" + local + "/");
+    build.start("mkdir " + QDir::homePath() + "/Desktop/" + pkgname + "/");
     build.waitForFinished();
     build.close();
-    build.start("cp \"" + filename + "\" " + QDir::homePath() + "/Desktop/" + local + "/");
+    build.start("cp \"" + filename + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/");
     build.waitForFinished();
     build.close();
-    build.start("cp \"" + icon + "\" " + QDir::homePath() + "/Desktop/" + local + "/icon.png");   // + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
+    build.start("cp \"" + icon + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png");   // + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
     build.waitForFinished();
     build.close();
     /*
@@ -292,13 +294,13 @@ void MainWindow::MakeJson()
     QStringList list = screenshots.split("\n");
     for(int i = 0; i < list.length(); i++)
     {
-        QString des = QString(QDir::homePath() + "/Desktop/" + local + "/screen_%1.png").arg(i + 1);
+        QString des = QString(QDir::homePath() + "/Desktop/" + pkgname + "/screen_%1.png").arg(i + 1);
         build.start("cp \"" + list.at(i) + "\" " + des);
         build.waitForFinished();
         build.close();
     }
 
-    QFile json(QDir::homePath() + "/Desktop/" + local + "/app.json");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知!
+    QFile json(QDir::homePath() + "/Desktop/" + pkgname + "/app.json");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知!
     if(!json.open(QIODevice::Append | QIODevice::Text))  // append追加新内容到文件末尾
     {
         QMessageBox::critical(this, "错误", "写入控制文件失败！", "确定");
@@ -326,7 +328,7 @@ void MainWindow::MakeJson()
 void MainWindow::MakeTar()
 {
     process->setWorkingDirectory(QDir::homePath() + "/Desktop/");
-    process->start("tar -zcvf " + local + ".tar.gz ./" + local + "/");
+    process->start("tar -zcvf " + pkgname + ".tar.gz ./" + pkgname + "/");
     process->waitForFinished();
     process->close();
 }
@@ -334,7 +336,7 @@ void MainWindow::MakeTar()
 void MainWindow::RemoveDir()    // 考虑后期压缩后直接删除文件夹
 {
     QProcess rm;
-    rm.start("rm -rf " + QDir::homePath() + "/Desktop/" + local + "/");
+    rm.start("rm -rf " + QDir::homePath() + "/Desktop/" + pkgname + "/");
     rm.waitForFinished();
     rm.close();
 }
