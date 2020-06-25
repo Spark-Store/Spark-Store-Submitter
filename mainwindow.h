@@ -46,6 +46,7 @@ private:
     QString info;
     QString screenshots;
     QString icon;
+    QString tmpicon = "";
 
     QFileInfo suf;
 

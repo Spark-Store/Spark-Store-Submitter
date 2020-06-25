@@ -54,8 +54,8 @@ void MainWindow::dropEvent(QDropEvent *event)
     /*
      * if(suffix == "deb")
      * {
-     *   ui->filename->setText(suf.filePath());
-     *    ui->name->setText(suf.baseName());
+     *     ui->filename->setText(suf.filePath());
+     *     ui->name->setText(suf.baseName());
      * }
      * else
      * {
@@ -124,8 +124,10 @@ void MainWindow::on_pushButton_3_clicked()
     icon = QFileDialog::getOpenFileName(this, tr("选择图标"), QDir::homePath(), tr("Image Files(*.png)"));  // 或者 "*.jpg"，以后可能会支持？
     if(icon.length() == 0) {
         QMessageBox::information(NULL, tr("呐！"), tr("根本没有选中东西嘛！"));
+        icon = tmpicon;
     } else {
         // icon = QFileInfo(icon).absolutePath() + "/icon." + QFileInfo(icon).suffix();  // 先留着，可能用得上......
+        tmpicon = icon;
         ui->pushButton_3->setText("");
         ui->icon->setPixmap(QIcon(icon).pixmap(135,135));
     }

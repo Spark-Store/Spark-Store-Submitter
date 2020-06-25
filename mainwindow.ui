@@ -508,7 +508,7 @@ border-radius:7px;
 background-color: rgb(255, 244, 245);</string>
     </property>
     <property name="placeholderText">
-     <string>这里写软件包的名字~（比如krita，vscode，dde-dock这样啦）</string>
+     <string>这里是软件包的名字~（比如krita，vscode，dde-dock这样啦）</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
