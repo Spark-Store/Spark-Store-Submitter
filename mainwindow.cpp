@@ -375,11 +375,19 @@ QString MainWindow::CalculateSize(qint64 size)
     }
 
     QString dec = "0";
-    if (0 <= decimal && decimal <= 9) {
-        dec += "0" + QString::number(decimal);
+    if (0 <= decimal && decimal <= 4) {
+        dec += "0";
+    }
+
+    if (5 <= decimal && decimal <= 9) {
+        dec += "1";
     }
 
     if (10 <= decimal && decimal <= 99) {
+        int temp = decimal % 10;
+        decimal /= 10;
+        if(5 <= temp && temp <= 9)
+            decimal++;
         dec += QString::number(decimal);
     }
 
