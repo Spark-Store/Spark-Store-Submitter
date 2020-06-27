@@ -275,6 +275,7 @@ void MainWindow::MakeJson()
     update = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm");
     screenshots = ui->image->toPlainText();
     info = ui->info->toPlainText();
+    info.replace("\n", "");     // 将简介信息中的换行符自动删除
     size = CalculateSize(QFileInfo(filename).size());
 
     QProcess build;
