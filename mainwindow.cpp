@@ -281,11 +281,11 @@ void MainWindow::MakeJson()
     QProcess build;
     build.start("mkdir " + QDir::homePath() + "/Desktop/" + pkgname + "/");
     build.waitForFinished();
-    build.close();
     build.start("cp \"" + filename + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/");
     build.waitForFinished();
-    build.close();
     build.start("cp \"" + icon + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png");   // + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
+    build.waitForFinished();
+    build.start("mogrify -resize 128x128 " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png");
     build.waitForFinished();
     build.close();
     /*
@@ -297,6 +297,8 @@ void MainWindow::MakeJson()
     {
         QString des = QString(QDir::homePath() + "/Desktop/" + pkgname + "/screen_%1.png").arg(i + 1);
         build.start("cp \"" + list.at(i) + "\" " + des);
+        build.waitForFinished();
+        build.start("mogrify -resize 400x300 " + des);
         build.waitForFinished();
         build.close();
     }
