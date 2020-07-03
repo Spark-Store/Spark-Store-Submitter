@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#include <QDesktopWidget>
+
 #include <QMimeData>
 #include <QMessageBox>
 #include <QDebug>
@@ -16,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setWindowFlags(windowFlags()&~Qt::WindowMaximizeButtonHint);    // 禁止最大化按钮
     setFixedSize(this->width(),this->height());     // 固定窗口大小
+    // 初始化窗口在屏幕中央
+    move((qApp->desktop()->availableGeometry().width() - width()) / 2 + qApp->desktop()->availableGeometry().x(), (qApp->desktop()->availableGeometry().height() - height()) / 2 + qApp->desktop()->availableGeometry().y());
 
     this->setAcceptDrops(true);
     ui->icon->setScaledContents(true);

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="backgrounds.qrc">
-    <normaloff>:/image/icon.png</normaloff>:/image/icon.png</iconset>
+    <normaloff>:/images/icon.png</normaloff>:/images/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -115,7 +115,7 @@ background-color: rgb(255, 244, 245);</string>
      <rect>
       <x>120</x>
       <y>220</y>
-      <width>431</width>
+      <width>411</width>
       <height>31</height>
      </rect>
     </property>
@@ -139,7 +139,7 @@ background-color: rgb(255, 244, 245);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/image/background.png);</string>
+     <string notr="true">border-image: url(:/images/background.png)</string>
     </property>
     <property name="text">
      <string/>
@@ -288,7 +288,7 @@ background-color: rgb(255, 244, 245);
    <widget class="QLabel" name="icon">
     <property name="geometry">
      <rect>
-      <x>670</x>
+      <x>660</x>
       <y>20</y>
       <width>180</width>
       <height>180</height>
@@ -307,7 +307,7 @@ background-color: rgb(255, 244, 245);</string>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>670</x>
+      <x>660</x>
       <y>20</y>
       <width>180</width>
       <height>180</height>
@@ -334,7 +334,7 @@ color: rgb(165, 165, 165);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/image/background2.png);</string>
+     <string notr="true">border-image: url(:/images/background2.png)</string>
     </property>
     <property name="text">
      <string/>
