@@ -272,6 +272,8 @@ void MainWindow::MakeJson()
      * local.replace(QRegExp("[\\s]+"), "");    // 本地创建的文件夹自动删除空格，避免写入json失败，原因未知!
      */
     filename = ui->filename->text();
+    QString origin = QFileInfo(filename).fileName();  // 原始文件名
+    origin.replace("+", "_plus_");    // 替换"+"为"_plus_"，避免识别问题
     pkgname = ui->pkgname->text();  // 更换标准，使用pkgname作为文件夹名，方便上传
     version = ui->version->text();
     author = ui->author->text();
@@ -286,7 +288,7 @@ void MainWindow::MakeJson()
     QProcess build;
     build.start("mkdir " + QDir::homePath() + "/Desktop/" + pkgname + "/");
     build.waitForFinished();
-    build.start("cp \"" + filename + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/");
+    build.start("cp \"" + filename + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/" + origin);  // 替换原有文件名
     build.waitForFinished();
     build.start("cp \"" + icon + "\" " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png");   // + QFileInfo(icon).suffix());   //保留图片后缀识别，便于后期扩展图片类型支持
     build.waitForFinished();
@@ -320,7 +322,7 @@ void MainWindow::MakeJson()
     write <<"{"<<endl;
     write <<"   \"Name\":\"" + name + "\","<<endl;
     write <<"   \"Version\":\"" + version + "\","<<endl;
-    write <<"   \"Filename\":\"" + QFileInfo(filename).fileName() + "\","<<endl;
+    write <<"   \"Filename\":\"" + origin + "\","<<endl;    // 替换原有文件名
     write <<"   \"Pkgname\":\"" + pkgname + "\","<<endl;
     write <<"   \"Author\":\"" + author + "\","<<endl;
     write <<"   \"Contributor\":\"" + contributor + "\","<<endl;
