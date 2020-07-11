@@ -294,6 +294,8 @@ void MainWindow::MakeJson()
     build.waitForFinished();
     build.start("mogrify -resize 128x128 " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png");
     build.waitForFinished();
+    build.start("mv " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png " + QDir::homePath() + "/Desktop/" + pkgname + "/icon.png.update");
+    build.waitForFinished();
     build.close();
     /*
      * build.start("cp \"" + screenshots + "\" -t " + QDir::homePath() + "/Desktop/" + local + "/");
@@ -307,10 +309,12 @@ void MainWindow::MakeJson()
         build.waitForFinished();
         build.start("mogrify -resize 400x300 " + des);
         build.waitForFinished();
+        build.start("mv " + des + " " + QString(QDir::homePath() + "/Desktop/" + pkgname + "/screen_%1.png.update").arg(i + 1));
+        build.waitForFinished();
         build.close();
     }
 
-    QFile json(QDir::homePath() + "/Desktop/" + pkgname + "/app.json");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知!
+    QFile json(QDir::homePath() + "/Desktop/" + pkgname + "/app.json.update");   // 若文件夹中有空格，此处写入失败，加了引号也是，原因未知!
     if(!json.open(QIODevice::Append | QIODevice::Text))  // append追加新内容到文件末尾
     {
         QMessageBox::critical(this, "错误", "写入控制文件失败！", "确定");
