@@ -308,7 +308,7 @@ void MainWindow::MakeJson()
         QString des = QString(QDir::homePath() + "/Desktop/" + pkgname + "/screen_%1.png").arg(i + 1);
         build.start("cp \"" + list.at(i) + "\" " + des);
         build.waitForFinished();
-        build.start("mogrify -resize 400x300 " + des);
+        build.start("mogrify -resize 800x600 " + des);
         build.waitForFinished();
         build.start("mv " + des + " " + QString(QDir::homePath() + "/Desktop/" + pkgname + "/screen_%1.png.update").arg(i + 1));
         build.waitForFinished();
